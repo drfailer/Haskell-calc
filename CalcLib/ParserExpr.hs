@@ -146,7 +146,7 @@ addoP :: Parser Expr
 addoP = addP <|> subP
   where
     addP = binOpP Add (subP <|> termoP) '+' exprP
-    subP = binOpP Sub termoP '-' exprP
+    subP = binOpP Sub termoP '-' (subP <|> termoP)
 
 -- Main expression parser
 exprP :: Parser Expr
