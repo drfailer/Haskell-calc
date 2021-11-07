@@ -13,21 +13,22 @@ data Expr
   | Lit Double
   | Fun Function
   | Cst Constant
+  deriving Show
 
-instance Show Expr where
-  show (Add el er) = (show el) ++ " + " ++ (show er)
-  show (Sub el er) = (show el) ++ " - " ++ (show er)
-  show (Mul el er) = (show el) ++ " x " ++ (show er)
-  show (Div el er) = (show el) ++ " / " ++ (show er)
-  show (Pow e p) = (show e) ++ "^(" ++ (show p) ++ ")"
-  show (Par e) = "(" ++ show e ++ ")"
-  show (Lit a) = show a
-  show (Fun f) = show f
-  show (Cst c) = show c
+-- instance Show Expr where
+--   show (Add el er) = (show el) ++ " + " ++ (show er)
+--   show (Sub el er) = (show el) ++ " - " ++ (show er)
+--   show (Mul el er) = (show el) ++ " x " ++ (show er)
+--   show (Div el er) = (show el) ++ " / " ++ (show er)
+--   show (Pow e p) = (show e) ++ "^(" ++ (show p) ++ ")"
+--   show (Par e) = "(" ++ show e ++ ")"
+--   show (Lit a) = show a
+--   show (Fun f) = show f
+--   show (Cst c) = show c
 
 evalExpr :: Expr -> Double
 evalExpr (Add el er) = (evalExpr el) + (evalExpr er)
-evalExpr (Sub el er) = (evalExpr el) - (evalExpr er)
+evalExpr (Sub el er) = (evalExpr el) - (evalExpr' er)
 evalExpr (Mul el er) = (evalExpr el) * (evalExpr er)
 evalExpr (Div el er) = (evalExpr el) / (evalExpr er)
 evalExpr (Pow e p) = (evalExpr e) ** (evalExpr p)
@@ -35,6 +36,10 @@ evalExpr (Par e) = evalExpr e
 evalExpr (Lit l) = l
 evalExpr (Fun f) = evalFun f
 evalExpr (Cst c) = evalConstant c
+
+evalExpr' :: Expr -> Double
+evalExpr' (Sub el er) = (evalExpr el) + (evalExpr' er)
+evalExpr' expr = evalExpr expr
 
 -------------------------------------------------------------------------------
 -- Functions:
@@ -49,17 +54,18 @@ data Function
   | ATan Expr
   | Log Expr
   | Exp Expr
+  deriving Show
 
-instance Show Function where
-  show (Sqrt e) = "sqrt(" ++ (show e) ++ ")"
-  show (Cos e)  = "cos(" ++ (show e) ++ ")"
-  show (Sin e)  = "sin(" ++ (show e) ++ ")"
-  show (Tan e)  = "tan(" ++ (show e) ++ ")"
-  show (ACos e) = "acos(" ++ (show e) ++ ")"
-  show (ASin e) = "asin(" ++ (show e) ++ ")"
-  show (ATan e) = "atan(" ++ (show e) ++ ")"
-  show (Log e)  = "log(" ++ (show e) ++ ")"
-  show (Exp e)  = "exp(" ++ (show e) ++ ")"
+-- instance Show Function where
+--   show (Sqrt e) = "sqrt(" ++ (show e) ++ ")"
+--   show (Cos e)  = "cos(" ++ (show e) ++ ")"
+--   show (Sin e)  = "sin(" ++ (show e) ++ ")"
+--   show (Tan e)  = "tan(" ++ (show e) ++ ")"
+--   show (ACos e) = "acos(" ++ (show e) ++ ")"
+--   show (ASin e) = "asin(" ++ (show e) ++ ")"
+--   show (ATan e) = "atan(" ++ (show e) ++ ")"
+--   show (Log e)  = "log(" ++ (show e) ++ ")"
+--   show (Exp e)  = "exp(" ++ (show e) ++ ")"
 
 
 evalFun :: Function -> Double
