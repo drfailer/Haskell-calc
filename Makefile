@@ -9,10 +9,7 @@ calc: Main.hs
 	ghc -dynamic --make Main.hs -o calc
 
 install: calc
-	cp calc ~/.config/scripts/
+	cp -f calc ~/.config/scripts/
 
 clean:
-	rm *.hi
-	rm *.o
-	rm ./CalcLib/*.hi
-	rm ./CalcLib/*.o
+	rm calc
