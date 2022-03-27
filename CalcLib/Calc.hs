@@ -7,8 +7,8 @@ import Data.Maybe
 -- pretty show the result like `2.0 + 2.0 = 4.0`
 prettyEval :: String -> String
 prettyEval s =
-  let e = (parse . filter (\x -> x /= ' ')) s
-   in case parse s of
+  let e = parse $ filter (\x -> x /= ' ') s
+   in case e of
         Nothing -> "Invalide input"
         Just a -> (show a) ++ " = " ++ (show $ evalExpr a)
 
@@ -18,7 +18,7 @@ eval = fmap evalExpr . parse . filter (\x -> x /= ' ')
 
 result :: String -> String
 result s =
-  let e = (parse . filter (\x -> x /= ' ')) s
-   in case parse s of
+  let e = parse $ filter (\x -> x /= ' ') s
+   in case e of
         Nothing -> "Invalide input"
         Just a -> (show $ evalExpr a)

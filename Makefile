@@ -8,6 +8,9 @@ all: Main.hs
 calc: Main.hs
 	ghc -dynamic --make Main.hs -o calc
 
+install: calc
+	cp calc ~/.config/scripts/
+
 clean:
 	rm *.hi
 	rm *.o
